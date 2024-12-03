@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class myThread {
+public class myThread extends Thread{
     
     Socket s;
     myThread(Socket s){
@@ -14,7 +14,7 @@ public class myThread {
     }
 
         
-    public void run() throws IOException {
+    public void run() {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
@@ -23,8 +23,9 @@ public class myThread {
                 stringa = in.readLine();
                 System.out.println(stringa + "\n");
             }while(!stringa.equals(null));
-            String finale = "HTTP/1.1 404 Not found \n" + "Content-Lenght: 0 \n" + "\r\n";
+            String finale = "HTTP/1.1 404 Not found \r\n" + "Content-Lenght: 0 \r\n" + "\r\n";
             out.writeBytes(finale);
+            s.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

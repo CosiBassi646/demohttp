@@ -15,6 +15,7 @@ public class Main {
         while (true) {
             Socket s = ss.accept();
             myThread t = new myThread(s);
+            t.start();
         }
     }
 }
