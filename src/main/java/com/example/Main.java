@@ -9,13 +9,16 @@ import java.net.Socket;
 
 public class Main {
     public static void main(String[] args) throws IOException{
-        System.out.println("Hello world!");
+        System.out.println("SERVER STARTED!");
         ServerSocket ss = new ServerSocket(8080);
  
         while (true) {
             Socket s = ss.accept();
             myThread t = new myThread(s);
             t.start();
+            
+            
+ 
         }
     }
 }
