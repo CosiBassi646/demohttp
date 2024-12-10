@@ -43,8 +43,8 @@ public class myThread extends Thread{
                 File file = new File("httdocs/index.html");
                 InputStream input = new FileInputStream(file);
                 out.writeBytes("HTTP/1.1 200 ok\n");
+                out.writeBytes("content-type" + getContentType(file));
                 out.writeBytes("content-lenght: " + file.length() + "\n");
-                out.writeBytes("content-type: text/html\n");
                 out.writeBytes("\n");
                 byte[] buf = new byte[8192];
                 int n;
@@ -52,6 +52,8 @@ public class myThread extends Thread{
                     out.write(buf,0,n);
                 }
                 input.close();
+
+
             }else{
                 String responsebody = "ERRORE file non trovato";
                 out.writeBytes("HTTP/1.1 404 not found\n");
@@ -65,10 +67,23 @@ public class myThread extends Thread{
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-      
+        }      
     }
 
-   
+    private static String getContentType(File f){
+            String[] s = f.getName().split("\\.");
+            String ext = s[s.length - 1];
+            switch (ext) {
+                case "html":
+                case "htm":
+                    return "text/html";    
+                case "png":
+                    return "image/png";
+                case "css":
+                    return "text/css";
+                default:
+                    return "";
+            }
+    }
 
 }
